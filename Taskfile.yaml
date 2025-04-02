@@ -1,0 +1,69 @@
+version: '3'
+
+tasks:
+  cleanup:
+    dir: '{{.TASKFILE_DIR}}'
+    cmds:
+      - rm -f ./glua
+      - go fmt
+      - go mod tidy
+      - rm -f test_coverage.out
+
+  test:
+    dir: '{{.TASKFILE_DIR}}'
+    cmds:
+      - ./_tools/go-inline *.go
+      - go fmt
+      - go test -v ./...
+
+  test:coverage:
+    dir: '{{.TASKFILE_DIR}}'
+    cmds:
+      - rm -f ./test_coverage.out
+      - ./_tools/go-inline *.go
+      - go fmt
+      - go test -v -cover ./... --tags=test_coverage -coverprofile=test_coverage.out
+      - go tool cover -html=test_coverage.out
+
+  vet:
+    dir: '{{.TASKFILE_DIR}}'
+    cmds:
+      - go vet ./...
+
+  build:
+    dir: '{{.TASKFILE_DIR}}'
+    vars:
+      TARGET_ARCH: '{{.TARGET_ARCH| default "amd64"}}'
+      TARGET_OS: '{{.TARGET_OS| default "linux"}}'
+      FLAGS:  '{{.FLAGS| default ""}}'
+    cmds:
+      #- task: cleanup
+      - ./_tools/go-inline *.go
+      - go fmt .
+      - GOOS={{.TARGET_OS}} GOARCH={{.TARGET_ARCH}} go build {{if .FLAGS}}{{.FLAGS}} {{end}}
+
+  build:glua:
+    dir: '{{.TASKFILE_DIR}}'
+    vars:
+      TARGET_ARCH: '{{.TARGET_ARCH| default "amd64"}}'
+      TARGET_OS: '{{.TARGET_OS| default "linux"}}'
+      FLAGS:  '{{.FLAGS| default ""}}'
+    cmds:
+      - ./_tools/go-inline *.go
+      - go fmt .
+      - GOOS={{.TARGET_OS}} GOARCH={{.TARGET_ARCH}} go build {{if .FLAGS}}{{.FLAGS}} {{end}}cmd/glua/glua.go
+
+  # see `golangci-lint help linters` to see all linters
+  # Pass -E/--enable to enable linter and -D/--disable to disable:
+  # `golangci-lint run --disable-all -E errcheck`
+  # using all checks and verbose output: $ golangci-lint run ./... --enable-all
+  lint:
+    dir: '{{.TASKFILE_DIR}}'
+    cmds:
+      - golangci-lint run ./...
+    
+  # installing development & ci dependencies
+  install:deps:
+    dir: '{{.TASKFILE_DIR}}'
+    cmds:
+      - go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.64.6
