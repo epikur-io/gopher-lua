@@ -366,7 +366,7 @@ func (tb *LTable) Next(key LValue) (LValue, LValue) {
 				}
 			}
 			if tb.array == nil || index == len(tb.array) {
-				if (tb.dict == nil || len(tb.dict) == 0) && (tb.strdict == nil || len(tb.strdict) == 0) {
+				if len(tb.dict) == 0 && len(tb.strdict) == 0 {
 					return LNil, LNil
 				}
 				key = tb.keys[0]
