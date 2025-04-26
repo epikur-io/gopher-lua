@@ -118,6 +118,8 @@ type Debug struct {
 	Source          string
 	CurrentLine     int
 	NUpvalues       int
+	NParameters     int
+	IsVarArg        bool
 	LineDefined     int
 	LastLineDefined int
 }
@@ -1571,6 +1573,12 @@ func (ls *LState) GetInfo(what string, dbg *Debug, fn LValue) (LValue, error) {
 			}
 		case 'u':
 			dbg.NUpvalues = len(f.Upvalues)
+			dbg.NParameters = int(f.Proto.NumParameters)
+			if f.Proto.IsVarArg > 0 {
+				dbg.IsVarArg = true
+			} else {
+				dbg.IsVarArg = false
+			}
 		case 'n':
 			if dbg.frame != nil {
 				dbg.Name = ls.rawFrameFuncName(dbg.frame)

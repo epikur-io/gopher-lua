@@ -77,6 +77,8 @@ func debugGetInfo(L *LState) int {
 	tbl.RawSetString("source", LString(dbg.Source))
 	tbl.RawSetString("currentline", LNumber(dbg.CurrentLine))
 	tbl.RawSetString("nups", LNumber(dbg.NUpvalues))
+	tbl.RawSetString("nparams", LNumber(dbg.NParameters))
+	tbl.RawSetString("isvararg", LBool(dbg.IsVarArg))
 	tbl.RawSetString("linedefined", LNumber(dbg.LineDefined))
 	tbl.RawSetString("lastlinedefined", LNumber(dbg.LastLineDefined))
 	tbl.RawSetString("func", fn)

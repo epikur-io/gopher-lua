@@ -1,5 +1,5 @@
 
-local function test_debughooks()
+local function test_debughooks(noarg1, noarg2)
     local debug = require("debug")
 
     local function test_call(a, b)
@@ -18,17 +18,18 @@ local function test_debughooks()
         elseif why == "return" then
             counter_r = counter_r + 1
         end
-        -- print("hook reached: ", why)
-        -- print("name =", debug.getinfo(2, "Slunf").name)
-        -- print("what =", debug.getinfo(2, "Slunf").what)
-        -- print("source =", debug.getinfo(2, "Slunf").source)
-        -- print("counter_c =", debug.getlocal(2, 3))
-        -- print("currentline =", debug.getinfo(2, "Slunf").currentline)
-        -- print("linedefined =", debug.getinfo(2, "Slunf").linedefined)
-        -- print("lastlinedefined =", debug.getinfo(2, "Slunf").lastlinedefined)
-        -- print("function =", debug.getinfo(2, "Slunf").name)
-        -- print("nups =", debug.getinfo(2, "Slunf").nups)
-        -- print("----------------------------------")
+        print("hook reached: ", why)
+        print("name =", debug.getinfo(2, "Slunf").name)
+        print("what =", debug.getinfo(2, "Slunf").what)
+        print("source =", debug.getinfo(2, "Slunf").source)
+        print("nparams =", debug.getinfo(2, "Slunf").nparams)
+        print("counter_c =", debug.getlocal(2, 3))
+        print("currentline =", debug.getinfo(2, "Slunf").currentline)
+        print("linedefined =", debug.getinfo(2, "Slunf").linedefined)
+        print("lastlinedefined =", debug.getinfo(2, "Slunf").lastlinedefined)
+        print("function =", debug.getinfo(2, "Slunf").name)
+        print("nups =", debug.getinfo(2, "Slunf").nups)
+        print("----------------------------------")
     end -- hook
 
     debug.sethook(hook, "clr", 0)
@@ -44,3 +45,10 @@ local function test_debughooks()
 end
 
 test_debughooks()
+local function vararg_func(...)
+    -- !DUMMY
+end
+assert(debug.getinfo(test_debughooks, "Slunf").nparams == 2)
+assert(debug.getinfo(test_debughooks, "Slunf").isvararg == false)
+assert(debug.getinfo(vararg_func, "Slunf").nparams == 0)
+assert(debug.getinfo(vararg_func, "Slunf").isvararg == true)
