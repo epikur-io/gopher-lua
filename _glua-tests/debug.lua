@@ -19,11 +19,15 @@ local function test_debughooks()
             counter_r = counter_r + 1
         end
         -- print("hook reached: ", why)
-        -- print("source =", debug.getinfo(2, "S").short_src)
-        -- print("linedefined =", debug.getinfo(2, "S").linedefined)
-        -- print("lastlinedefined =", debug.getinfo(2, "S").lastlinedefined)
-        -- print("function =", debug.getinfo(2, "n").name)
-        -- print("nparams =", debug.getinfo(2, "u").nparams)
+        -- print("name =", debug.getinfo(2, "Slunf").name)
+        -- print("what =", debug.getinfo(2, "Slunf").what)
+        -- print("source =", debug.getinfo(2, "Slunf").source)
+        -- print("counter_c =", debug.getlocal(2, 3))
+        -- print("currentline =", debug.getinfo(2, "Slunf").currentline)
+        -- print("linedefined =", debug.getinfo(2, "Slunf").linedefined)
+        -- print("lastlinedefined =", debug.getinfo(2, "Slunf").lastlinedefined)
+        -- print("function =", debug.getinfo(2, "Slunf").name)
+        -- print("nups =", debug.getinfo(2, "Slunf").nups)
         -- print("----------------------------------")
     end -- hook
 
