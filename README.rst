@@ -24,6 +24,8 @@ with Lua: **Be a scripting language with extensible semantics** . It provides
 Go APIs that allow you to easily embed a scripting language to your Go host
 programs.
 
+**Note: This fork contains some bugfixes and optimizations as well as support for Lua debug hooks.**
+
 .. contents::
    :depth: 1
 
