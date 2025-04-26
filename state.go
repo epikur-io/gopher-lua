@@ -1749,7 +1749,9 @@ func (ls *LState) GetInfo(what string, dbg *Debug, fn LValue) (LValue, error) {
 	} else {
 		what = what[1:]
 	}
-	f, ok := fn.(*LFunction)
+	f, ok := fn.(*LFunction)	
+	// !TODO: Add `nparams` to Debug struct and set it to the value of `f.Proto.NumParameters`
+	// in case it's a function. Note that this is actually not a feature of Lua 5.1 but rather Lua >= 5.2
 	if !ok {
 		return LNil, newApiErrorS(ApiErrorRun, "can not get debug info(an object in not a function)")
 	}
