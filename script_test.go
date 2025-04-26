@@ -18,6 +18,7 @@ var gluaTests []string = []string{
 	"base.lua",
 	"coroutine.lua",
 	"db.lua",
+	"debug.lua",
 	"issues.lua",
 	"os.lua",
 	"table.lua",
