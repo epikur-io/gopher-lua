@@ -1,1 +1,4 @@
 .idea
+playground
+test_coverage.out
+golangci-lint.out
