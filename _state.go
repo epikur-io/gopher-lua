@@ -1654,11 +1654,23 @@ func (ls *LState) SetHook(callback *LFunction, event string, count int) error {
 	for _, c := range event {
 		switch c {
 		case 'l':
-			ls.lhook = newLHook(callback, frame.Fn.Proto.DbgSourcePositions[frame.Pc-1])
+			if callback == nil {
+				ls.lhook = nil
+			} else {
+				ls.lhook = newLHook(callback, frame.Fn.Proto.DbgSourcePositions[frame.Pc-1])
+			}
 		case 'c':
-			ls.chook = newCHook(callback)
+			if callback == nil {
+				ls.chook = nil
+			} else {
+				ls.chook = newCHook(callback)
+			}
 		case 'r':
-			ls.rhook = newRHook(callback)
+			if callback == nil {
+				ls.rhook = nil
+			} else {
+				ls.rhook = newRHook(callback)
+			}
 		default:
 			return newApiErrorS(ApiErrorRun, fmt.Sprintf("invalid hook event: %c", c))
 		}

@@ -31,14 +31,18 @@ func debugGetFEnv(L *LState) int {
 }
 
 func debugSetHook(L *LState) int {
-	L.CheckTypes(1, LTFunction)
+	callbackArg := L.Get(1)
+	callback, isFunc := callbackArg.(*LFunction)
+	_, isNil := callbackArg.(*LNilType)
+	if !isFunc && !isNil {
+		L.TypeError(1, LTFunction)
+	}
 	L.CheckTypes(2, LTString)
 	L.CheckTypes(3, LTNumber)
-	callbackArg := L.OptFunction(1, nil)
 	eventArg := L.OptString(2, "")
 	countArg := L.OptInt(3, 0)
 	L.Pop(3)
-	_ = L.SetHook(callbackArg, eventArg, countArg)
+	_ = L.SetHook(callback, eventArg, countArg)
 	return 0
 }
 
