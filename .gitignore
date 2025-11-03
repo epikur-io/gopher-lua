@@ -1,4 +1,6 @@
 .idea
+_vendor
+vendor
 playground
 test_coverage.out
 golangci-lint.out
