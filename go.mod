@@ -1,6 +1,6 @@
 module github.com/epikur-io/gopher-lua
 
-go 1.20
+go 1.23
 
 require github.com/chzyer/readline v0.0.0-20180603132655-2972be24d48e
 
